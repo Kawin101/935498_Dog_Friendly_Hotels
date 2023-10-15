@@ -11,7 +11,16 @@ def index(request):
     # if .order_by('pk') = 1,2,3,4
     # '-pk' = 4,3,2,1
     # [:2] แสดง 2 บทความล่าสุด
-    latest = Blogs.objects.all().order_by('-pk')[:2]
+    latest = Blogs.objects.all().order_by('-pk')[:4]
+
+    # บทความยอดนิยม
+    # 'views' = 1,2,3,4
+    # '-views' = 4,3,2,1
+    # [:3] แสดง 3 ตัวแรก
+    popular = Blogs.objects.all().order_by('-views')[:3]
+
+    # บทความแนะนำ
+    suggestion = Blogs.objects.all().order_by('views')[:3]
 
     # Pagination
     paginator = Paginator(blogs,4)
@@ -29,8 +38,24 @@ def index(request):
         'categories': categories,
         'blogs': blogPerpage,
         'latest': latest,
+        'popular': popular,
+        'suggestion': suggestion,
         })
 
 def blogDetail(request, id):
+    categories = Category.objects.all()
+    # บทความยอดนิยม
+    popular = Blogs.objects.all().order_by('-views')[:3]
+
+    # บทความแนะนำ
+    suggestion = Blogs.objects.all().order_by('views')[:3]
+
     singleBlog = Blogs.objects.get(id = id)
-    return render(request, "frontend/blogDetail.html", {"blog":singleBlog})
+    singleBlog.views = singleBlog.views+1
+    singleBlog.save()
+    return render(request, "frontend/blogDetail.html", {
+        "blog":singleBlog,
+        'categories': categories,
+        'popular': popular,
+        'suggestion': suggestion,
+        })
