@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, auth
 
 # Create your views here.
 def index(request):
@@ -17,15 +17,37 @@ def register(request):
             return redirect("member")
         else:
             if password == repassword:
-                messages.info(request, "รหัสผ่านตรงกัน")
-                user = User.objects.create_user(
+                if User.objects.filter(username=username).exists():
+                    messages.info(request, "Username นี้มีคนใช้แล้ว")
+                    return redirect("member")
+                elif User.objects.filter(email=email).exists():
+                    messages.info(request, "อีเมลนี้เคยลงทะเบียนไปแล้ว")
+                    return redirect("member")
+                else:
+                    user = User.objects.create_user(
                     username = username,
                     email = email,
                     password = password
-                )
-                user.save()
-                messages.info(request, "สร้างบัญชีเสร็จสิ้น")
-                return redirect("member")
+                    )
+                    user.save()
+                    messages.info(request, "สร้างบัญชีเสร็จสิ้น")
+                    return redirect("member")
             else:
                 messages.info(request, "รหัสผ่านไม่ตรงกัน กรุณากรอกใหม่อีกครั้ง")
                 return redirect("member")
+
+def login(request):
+    username = request.POST["username"]
+    password = request.POST["password"]
+    user = auth.authenticate(username = username, password = password)
+
+    if user is not None:
+        auth.login(request, user)
+        return redirect("panel")
+    else:
+        messages.info(request, "ไม่พบข้อมูลบัญชีผู้ใช้งาน")
+        return redirect("member")
+
+def logout(request):
+    auth.logout(request)
+    return redirect("member")
