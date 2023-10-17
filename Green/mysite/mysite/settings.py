@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'category',
     'django.contrib.humanize',
     'writerpanel',
+    'loginsystem',
 ]
 
 MIDDLEWARE = [
