@@ -59,3 +59,34 @@ def blogDetail(request, id):
         'popular': popular,
         'suggestion': suggestion,
         })
+
+def searchCategory(request, cat_id):
+    blogs = Blogs.objects.filter(category_id = cat_id)
+    # บทความยอดนิยม
+    popular = Blogs.objects.all().order_by('-views')[:3]
+
+    # บทความแนะนำ
+    suggestion = Blogs.objects.all().order_by('views')[:3]
+    categoryName = Category.objects.get(id=cat_id)
+    categories = Category.objects.all()
+    return render(request, "frontend/searchCategory.html", {
+        "blogs": blogs,
+        'categories': categories,
+        'popular': popular,
+        'suggestion': suggestion,
+        'categoryName': categoryName,
+        })
+
+def searchWriter(request, writer):
+    blogs = Blogs.objects.filter(writer = writer)
+    categories = Category.objects.all()
+    suggestion = Blogs.objects.all().order_by('views')[:3]
+    popular = Blogs.objects.all().order_by('-views')[:3]
+
+    return render(request,"frontend/searchWriter.html", {
+        "blogs": blogs,
+        'categories': categories,
+        'popular': popular,
+        'suggestion': suggestion,
+        'writer': writer,
+    })
