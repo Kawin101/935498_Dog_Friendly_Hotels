@@ -22,6 +22,8 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("blogs.urls")),
+    path('writer/dashboard', include("writerpanel.urls")),
+    path('user/', include('loginsystem.urls'))
 ]
 
 if settings.DEBUG:
