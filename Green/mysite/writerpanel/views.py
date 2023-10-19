@@ -40,12 +40,29 @@ def displayForm(request):
 def insertData(request):
     if request.method == "POST" and request.FILES["image"]:
         datafile = request.FILES["image"]
+        # รับค่าจากฟอร์ม
+        name = request.POST["name"]
+        category = request.POST["category"]
+        description = request.POST["description"]
+        content = request.POST["content"]
+        writer = auth.get_user(request)
+
         if str(datafile.content_type).startswith("image"):
             # อัพโหลด
             fs = FileSystemStorage()
             img_url = "blogImages/" + datafile.name
             filename = fs.save(img_url, datafile)
-            messages.info(request, "อัพโหลดสำเร็จ")
+            # บันทึกข้อมูลบทความ
+            blog = Blogs(
+                name = name, 
+                category_id = category, 
+                description = description, 
+                content = content,
+                writer = writer,
+                image = img_url,
+                )
+            blog.save()
+            messages.info(request, "บันทึกข้อมูลเรียบร้อย")
             return redirect("displayForm")
         else:
             messages.info(request, "ไฟล์ที่อัพโหลดไม่รองรับ กรุณาอัพโหลดไฟล์รูปภาพอีกครั้ง")
