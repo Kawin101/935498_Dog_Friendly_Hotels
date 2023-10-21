@@ -1,18 +1,47 @@
+# import requests
+# from bs4 import BeautifulSoup
+
+# r = requests.get("https://travel.trueid.net/detail/rDvYykOdorNR")
+# # override encoding by real educated guess as provided by chardet
+# r.encoding = r.apparent_encoding
+# # access the data
+# r.text
+
+
+# print(r.text.encode('utf-8'))
+
+
 import requests
 from bs4 import BeautifulSoup
 
+# Send an HTTP GET request to the URL
+url = "https://travel.trueid.net/detail/rDvYykOdorNR"
+response = requests.get(url)
 
-# url = "https://www.dogthailand.net/small"
-# data = requests.get(url,headers={"User-Agent":"Mozilla/5.0"})
-# print(data.text.encode("utf-8")) im_Celebrity_News
-url = "https://www.dogthailand.net/small"
-data = requests.get(url,headers={"User-Agent":"Mozilla/5.0"})
-soup = BeautifulSoup(data.text, 'html.parser')
+# Check if the request was successful
+if response.status_code == 200:
+    # Parse the HTML content of the page
+    soup = BeautifulSoup(response.text, 'html.parser')
 
-data1 = soup.find_all("div",{"class":"im_Celebrity_News"})
-data1_list=[]
+    # Extract information from the page by selecting HTML elements
+    # Example: Get the title of the page
+    title = soup.find('title').text
 
-for item in data1:
-    data1_list.append(item.text.encode("utf-8"))
+    # Encode the title as UTF-8 before printing
+    title = title.encode('utf-8', 'ignore').decode('utf-8')
+    
+    # Example: Get a specific element by class name
+    specific_element = soup.find('div', class_='your-class-name')
 
-print(data1_list)
+    if specific_element is not None:
+        # Encode the specific_element as UTF-8 before printing (if needed)
+        specific_element = specific_element.encode('utf-8', 'ignore').decode('utf-8')
+        print("Specific Element:", specific_element)
+    else:
+        print("Specific element not found.")
+    
+    # Print the title
+    print("Title:", title)
+
+else:
+    print("Failed to retrieve the page. Status code:", response.status_code)
