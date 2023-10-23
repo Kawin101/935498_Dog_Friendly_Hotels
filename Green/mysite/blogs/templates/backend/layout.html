@@ -126,7 +126,7 @@
                                         {% if request.user.is_authenticated and request.user.username %}
                                         <a href="{% url 'searchWriter' request.user.username %}" target="_blank">
                                             <i class="fa fa-user fa-fw pull-right"></i>
-                                            ดูบทความของฉัน
+                                            ดูโรงแรมของฉัน
                                         </a>
                                         {% endif %}
 
@@ -154,7 +154,7 @@
                                             <i class="fa fa-file-text"></i>
                                         </div>
                                         <h3 class="widget-content text-right animation-pullDown">
-                                            เขียน<strong>บทความ</strong><br>
+                                            เพิ่ม<strong>โรงแรม</strong><br>
                                             <small>ของคุณที่นี่!</small>
                                         </h3>
                                     </div>
@@ -170,7 +170,7 @@
                                         </div>
                                         <h3 class="widget-content text-right animation-pullDown">
                                             จำนวน <strong>{{blogCount | intcomma }}</strong><br>
-                                            <small>บทความ</small>
+                                            <small>โรงแรม</small>
                                         </h3>
                                     </div>
                                 </a>
