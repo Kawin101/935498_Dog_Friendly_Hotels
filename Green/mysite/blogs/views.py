@@ -90,3 +90,12 @@ def searchWriter(request, writer):
         'suggestion': suggestion,
         'writer': writer,
     })
+
+def searchAddress(request):
+    return render(request,"frontend\searchAddress.html")
+
+def googleMap(request):
+    return render(request,"frontend\googleMap.html")
+
+def webScraping(request):
+    return render(request,"frontend\webScraping.html")
