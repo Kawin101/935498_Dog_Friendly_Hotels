@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         {% load static %}
         {% load humanize %}
-        <title>Writer Panel</title>
+        <title>Writer | Dashboard</title>
 
         <meta name="robots" content="noindex, nofollow">
         <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
@@ -41,7 +41,7 @@
                         <div class="sidebar-content">
                             <!-- Brand -->
                             <a href="{% url 'panel' %}" class="sidebar-brand">
-                                <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Writer</strong>Panel</span>
+                                <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Writer</strong> Dashboard</span>
                             </a>
                             <!-- END Brand -->
 
@@ -103,8 +103,10 @@
                             <!-- END Main Sidebar Toggle Button -->
                         </ul>
                         <!-- END Left Header Navigation -->
+
                         <!-- Search Form -->
-                        <form action="page_ready_search_results.html" method="post" class="navbar-form-custom">
+                        <form action="#" method="post" class="navbar-form-custom">
+                            {% csrf_token %}
                             <div class="form-group">
                                 <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search..">
                             </div>
@@ -126,7 +128,7 @@
                                         {% if request.user.is_authenticated and request.user.username %}
                                         <a href="{% url 'searchWriter' request.user.username %}" target="_blank">
                                             <i class="fa fa-user fa-fw pull-right"></i>
-                                            ดูบทความของฉัน
+                                            ดูโรงแรมของฉัน
                                         </a>
                                         {% endif %}
 
@@ -154,7 +156,7 @@
                                             <i class="fa fa-file-text"></i>
                                         </div>
                                         <h3 class="widget-content text-right animation-pullDown">
-                                            เขียน<strong>บทความ</strong><br>
+                                            เพิ่ม<strong>โรงแรม</strong><br>
                                             <small>ของคุณที่นี่!</small>
                                         </h3>
                                     </div>
@@ -170,7 +172,7 @@
                                         </div>
                                         <h3 class="widget-content text-right animation-pullDown">
                                             จำนวน <strong>{{blogCount | intcomma }}</strong><br>
-                                            <small>บทความ</small>
+                                            <small>โรงแรม</small>
                                         </h3>
                                     </div>
                                 </a>
