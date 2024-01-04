@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'writerpanel',
     'loginsystem',
+    'googlemap',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -122,7 +124,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')    
+]
+
 STATIC_URL = 'static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_cdn')
+
+GOOGLE_API_KEY = "AIzaSyAB6XzoNy8uYR2OR467aC3reOqtNBlUnm8"
+
+RECAPTCHA_KEY = "6Lf4NUUpAAAAAPC_3w5Zkao6N01ANKvGkl0Cuo7l"
+
+RECAPTCHA_SECRET_KEY = "6Lf4NUUpAAAAAPo_Owl181RhRhZqGFxTcUT6t0uJ"
+
+# This's about image files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
@@ -130,3 +146,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = "users:sign-in"
+LOGIN_REDIRECT_URL = "users:account"
+LOGOUT_REDIRECT_URL = "users:sign-in"
+
+BASE_COUNTRY = "UK"
